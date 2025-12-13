@@ -46,7 +46,8 @@ export default defineConfig({
     timeout: 4 * 1000,
     toPass: {
       timeout: 2 * 1000, // mostly used for API tests polling, that's why it's less than the timeout above
-      intervals: [100, 250, 500, 1000],
+      // defines the actual polling intervals in the exact amount specified in the array:
+      intervals: [100, 250, 500, 750],
     },
   },
   timeout: 15 * 1000,
