@@ -1,5 +1,10 @@
 import { test, expect, GIVEN, THEN, WHEN } from './__base-test__.js'
 
+test.skip(
+  true,
+  'Skipping all tests in this file, because Google is too nerdy, blocking robots like us 😇',
+)
+
 test('finds playwright | StepsObject, AAA pattern (implicit)', async ({ app }) => {
   await app.google.open()
   await app.google.query.shouldBeEmpty()

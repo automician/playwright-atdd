@@ -9,7 +9,7 @@
   "author": "Iakiv Kramarenko",
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.46.1",
-    "@types/node": "^22.4.2"
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.1"
   }
 }

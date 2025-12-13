@@ -6,7 +6,7 @@ Patterns covered:
   * more or less standard in context of technical implementation
     * based on page locators defined in the constructor
   * where methods are considered to be a higher-level user-steps
-    * hense also covering "assertion-steps" (i.e. it's not an assertion-free PageObject)
+    * hence also covering "assertion-steps" (i.e. it's not an assertion-free PageObject)
     * what makes such implementation to look more like a StepsObject than PageObject :D
   * applied to both pages and controls (like TextInput)
 * An ApplicationManager as one entry point to "pages" PageObjects
