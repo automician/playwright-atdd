@@ -24,7 +24,16 @@ export default defineConfig({
   reporter: [
     ['list', { printSteps: false }],
     // ['html', { open: 'on-failure' }],
-    ['html', { open: 'allways', port: 9324 }],
+    [
+      'html',
+      {
+        open: 'always',
+        port: 9324,
+        // an important option for "withSteps" behavior,
+        // to remove boilerplate code from the report
+        noSnippets: true,
+      },
+    ],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
