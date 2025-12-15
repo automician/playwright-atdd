@@ -23,6 +23,7 @@ The proxy appliction to report each step-method of a PageObject will be document
 
 ## Other TODOs
 
+* add example of api test to highlight how <return> sub-step is rendered (for the method-step that makes request and returns response)
 * refactor for project root based imports
 * implement custom dotenv support
 * add installation instructions to README
