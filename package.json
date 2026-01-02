@@ -9,6 +9,7 @@
   "author": "Iakiv Kramarenko",
   "license": "MIT",
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.51.4",
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.1"
   }

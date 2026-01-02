@@ -25,7 +25,6 @@ The proxy appliction to report each step-method of a PageObject will be document
 
 * add example of api test to highlight how <return> sub-step is rendered (for the method-step that makes request and returns response)
 * refactor for project root based imports
-* implement custom dotenv support
 * add installation instructions to README
 * add project settings with dotenv overrides to allow customize steps behavior (like prefixes to ignore, etc.)
 * model one more page (like playwright docs, etc.)
@@ -44,7 +43,7 @@ The proxy appliction to report each step-method of a PageObject will be document
     str.lower,
   )
   ```
-  * if ported straightforward to js it would looke like:
+  * if ported straightforward to js it would look like:
 
   ```js
   threadLast(
@@ -60,3 +59,8 @@ The proxy appliction to report each step-method of a PageObject will be document
 
   – that does not look concise enough:) so let's think on in a bit more...
 * add API tests examples based on implemented helpers
+
+## Parked TODOs
+
+* implement custom dotenv support
+  * looks like dotenvx is enough
