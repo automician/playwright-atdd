@@ -17,6 +17,11 @@ Patterns & Techniques covered:
 - AAA pattern of BDD style reported steps – GIVEN/WHEN/THEN over Arrange/Act/Assert
 - debug logging with [debug](https://www.npmjs.com/package/debug) package
   - Prefix your calls with `DEBUG=support:*` to show debug logs for all "support:"-prefixed logs when running from shell
+- project configuration with smart overrides:
+  - from environment variables via custom [withEnvOverrides](lib/support/config/withEnvOverrides.js) implementation
+  - dotenv files support via [dotenvx](https://www.npmjs.com/package/dotenvx)
+  - from YAML files support via [js-yaml](https://www.npmjs.com/package/js-yaml) + custom [withYamlOverrides](lib/support/config/withYamlOverrides.js) implementation
+    - might be useful if key settings per environment are stored directly in CI yaml files like `gitlab-ci.yml`, though if possible I would prefer to use dotenv files only, that are also reused on CI if needed.
 
 The proxy application to report each step-method of a PageObject will be documented later in more details, stay tuned;).
 
@@ -56,7 +61,7 @@ The proxy application to report each step-method of a PageObject will be documen
   )
   ```
 
-  – that does not look concise enough:) so let's think on in a bit more...
+  – that does not look concise enough:) so let's think on it a bit more...
 - add API tests examples based on implemented helpers
 
 ## Parked TODOs
