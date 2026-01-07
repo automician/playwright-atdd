@@ -20,7 +20,7 @@ Patterns & Techniques covered:
 - project configuration with smart overrides:
   - from environment variables via custom [withEnvOverrides](lib/support/config/withEnvOverrides.js) implementation
   - dotenv files support via [dotenvx](https://www.npmjs.com/package/dotenvx)
-  - from YAML files support via [js-yaml](https://www.npmjs.com/package/js-yaml) + custom [withYamlOverrides](lib/support/config/withYamlOverrides.js) implementation
+  - from YAML files support via [js-yaml](https://www.npmjs.com/package/js-yaml) + custom [withYmlOverrides](lib/support/config/withYmlOverrides.js) implementation
     - might be useful if key settings per environment are stored directly in CI yaml files like `gitlab-ci.yml`, though if possible I would prefer to use dotenv files only, that are also reused on CI if needed.
 
 The proxy application to report each step-method of a PageObject will be documented later in more details, stay tuned;).
