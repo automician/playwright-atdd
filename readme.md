@@ -14,6 +14,7 @@ Patterns & Techniques covered:
 - Proxy-based wrapper around playwright test.step – to be applied on an object level to log all its methods calls (excluding `toString` and the methods named with `_` or `$` prefix, and non-async methods on `{ignoreNonAsync: true}` options arg set)
   - allowing to report the corresponding PageObject steps
   - with actual application as `return withSteps(this)` last line in the PageObject constructor
+  - supporting "humanized step names" (words separated with spaces instead of camelCase)
 - AAA pattern of BDD style reported steps – GIVEN/WHEN/THEN over Arrange/Act/Assert
 - debug logging with [debug](https://www.npmjs.com/package/debug) package
   - Prefix your calls with `DEBUG=support:*` to show debug logs for all "support:"-prefixed logs when running from shell
