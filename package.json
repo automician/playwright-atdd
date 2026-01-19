@@ -13,6 +13,7 @@
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.1",
     "debug": "^4.4.3",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "playwright-slack-report": "^1.1.100"
   }
 }

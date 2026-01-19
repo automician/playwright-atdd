@@ -23,6 +23,7 @@ Patterns & Techniques covered:
   - dotenv files support via [dotenvx](https://www.npmjs.com/package/dotenvx)
   - from YAML files support via [js-yaml](https://www.npmjs.com/package/js-yaml) + custom [withYmlOverrides](lib/support/config/withYmlOverrides.js) implementation
     - might be useful if key settings per environment are stored directly in CI yaml files like `gitlab-ci.yml`, though if possible I would prefer to use dotenv files only, that are also reused on CI if needed.
+- basic reporting to slack via [playwright-slack-report](https://www.npmjs.com/package/playwright-slack-report)
 
 The proxy application to report each step-method of a PageObject will be documented later in more details, stay tuned;).
 
@@ -64,6 +65,32 @@ The proxy application to report each step-method of a PageObject will be documen
 
   – that does not look concise enough:) so let's think on it a bit more...
 - add API tests examples based on implemented helpers
+
+## Slack Reporting
+
+The project supports sending test results to Slack via [playwright-slack-report](https://github.com/ryanrosello-og/playwright-slack-report).
+
+### Setup
+
+1. Create a Slack App at <https://api.slack.com/apps>
+2. Add the following OAuth scopes: `chat:write`, `chat:write.public`
+3. Install the app to your workspace and copy the Bot User OAuth Token
+4. Invite the bot to your target channel(s)
+
+### Environment Variables
+
+- **`slackOAuthToken`** (required) - Your Slack Bot User OAuth Token (starts with `xoxb-`)
+- **`SLACK_CHANNELS`** (optional) - Comma-separated list of channels to post to (default: `pw-tests`)
+- **`CI_RUN_URL`** (optional) - Link to the CI run for reference in the Slack message
+
+### Usage
+
+```bash
+# Run tests with Slack reporting
+slackOAuthToken=xoxb-... SLACK_CHANNELS=pw-tests,ci npx playwright test
+```
+
+The reporter is conditionally enabled only when `slackOAuthToken` is set.
 
 ## Parked TODOs
 

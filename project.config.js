@@ -1,6 +1,5 @@
 import withEnvOverrides from './lib/support/config/withEnvOverrides.js'
 import findFileWalkingToRoot from './lib/support/config/findFileWalkingToRoot.js'
-import playwrightConfig from './playwright.config.js'
 import dotenvx from '@dotenvx/dotenvx'
 
 // load environment variables from .env file if exists
@@ -20,10 +19,15 @@ export const config = withEnvOverrides(
     searchEngineResultSelector: '',
     searchEngineResultHeaderSelector: '',
     searchEngineResultLinkSelector: '',
-    /* ⬇️ sub-configs ⬇️ */
-    playwright: playwrightConfig, // TODO: remove it, instead – user some config.* in playwright.config.js
+    /* ⬇️ reporting ⬇️ */
+    slackOAuthToken: '',
+    channelsString: 'pw-tests', // comma-separated list of channels to post to
+    channels() {
+      return this.channelsString ? this.channelsString.split(',') : []
+    },
+    slackLogLevel: 'info', // "error", "warn", "info", "debug"
   },
-  {
-    ignore: ['playwright'],
-  },
+  // {
+  //   ignore: ['someSettingToIgnore'],
+  // },
 )
