@@ -29,6 +29,7 @@ The proxy application to report each step-method of a PageObject will be documen
 
 ## Other TODOs
 
+- consider [zod](https://zod.dev/) for config schema validation
 - add example of api test to highlight how <return> sub-step is rendered (for the method-step that makes request and returns response)
 - refactor for project root based imports
 - add installation instructions to README
