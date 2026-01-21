@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test'
-import { config } from './project.config.js'
+import { project } from './project.config.js'
 
 /**
  * Read environment variables from file.
@@ -35,17 +35,17 @@ export default defineConfig({
         noSnippets: true,
       },
     ],
-    ...(config.slackOAuthToken
+    ...(project.config.slackOAuthToken
       ? /** @type {import('@playwright/test').ReporterDescription[]} */ ([
           [
             './node_modules/playwright-slack-report/dist/src/SlackReporter.js',
             {
-              channels: config.channels(),
-              slackOAuthToken: config.slackOAuthToken,
+              channels: project.config.channels(),
+              slackOAuthToken: project.config.slackOAuthToken,
               sendResults: 'always', // "always" , "on-failure", "off"
               maxNumberOfFailuresToShow: 10,
               showInThread: true,
-              slackLogLevel: config.slackLogLevel,
+              slackLogLevel: project.config.slackLogLevel,
               meta: [
                 {
                   key: 'Run',

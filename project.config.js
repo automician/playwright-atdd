@@ -31,3 +31,11 @@ export const config = withEnvOverrides(
   //   ignore: ['someSettingToIgnore'],
   // },
 )
+
+/**
+ * An alias for cases where there are other configs, like playwrightConfig,
+ * so when used in same file it would be easier to distinguish between them
+ */
+export const project = {
+  config,
+}
