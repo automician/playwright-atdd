@@ -36,7 +36,7 @@ The proxy application to report each step-method of a PageObject will be documen
 - add project settings with dotenv overrides to allow customize steps behavior (like prefixes to ignore, etc.)
 - model one more page (like playwright docs, etc.)
 - document main examples of code + reports in README (with screenshots, like in [python-web-test project template README](https://github.com/yashaka/python-web-test?tab=readme-ov-file#details))
-- add "human readable" rendering of steps, similar to [_full_description_for helper implementation from Selene](https://github.com/yashaka/selene/blob/master/selene/common/_typing_functions.py#L119) that utilizes threading "macros" implementation in python (consider implementing similar in js)
+- add "human readable" rendering of steps, similar to [\_full_description_for helper implementation from Selene](https://github.com/yashaka/selene/blob/master/selene/common/_typing_functions.py#L119) that utilizes threading "macros" implementation in python (consider implementing similar in js)
   - in python the implementation looks like
 
   ```python
@@ -50,6 +50,7 @@ The proxy application to report each step-method of a PageObject will be documen
     str.lower,
   )
   ```
+
   - if ported straightforward to js it would look like:
 
   ```js
@@ -65,6 +66,7 @@ The proxy application to report each step-method of a PageObject will be documen
   ```
 
   – that does not look concise enough:) so let's think on it a bit more...
+
 - add API tests examples based on implemented helpers
 
 ## Slack Reporting

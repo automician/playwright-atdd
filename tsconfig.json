@@ -8,7 +8,5 @@
     "module": "nodenext",
     "moduleResolution": "nodenext"
   },
-  "include": [
-    "./**/*.*"
-  ]
+  "include": ["./**/*.*"]
 }

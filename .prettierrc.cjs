@@ -1,4 +1,5 @@
 module.exports = {
+  experimentalTernaries: true,
   semi: false,
   arrowParens: 'avoid',
   bracketSameLine: false,

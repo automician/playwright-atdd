@@ -4,6 +4,6 @@
     "dbaeumer.vscode-eslint",
     // Format
     "esbenp.prettier-vscode",
-    "editorconfig.editorconfig",
+    "editorconfig.editorconfig"
   ]
 }

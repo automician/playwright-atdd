@@ -35,27 +35,27 @@ export default defineConfig({
         noSnippets: true,
       },
     ],
-    ...(project.config.slackOAuthToken
-      ? /** @type {import('@playwright/test').ReporterDescription[]} */ ([
-          [
-            './node_modules/playwright-slack-report/dist/src/SlackReporter.js',
-            {
-              channels: project.config.channels(),
-              slackOAuthToken: project.config.slackOAuthToken,
-              sendResults: 'always', // "always" , "on-failure", "off"
-              maxNumberOfFailuresToShow: 10,
-              showInThread: true,
-              slackLogLevel: project.config.slackLogLevel,
-              meta: [
-                {
-                  key: 'Run',
-                  value: process.env.CI_RUN_URL || 'Local run',
-                },
-              ],
-            },
-          ],
-        ])
-      : []),
+    ...(project.config.slackOAuthToken ?
+      /** @type {import('@playwright/test').ReporterDescription[]} */ ([
+        [
+          './node_modules/playwright-slack-report/dist/src/SlackReporter.js',
+          {
+            channels: project.config.channels(),
+            slackOAuthToken: project.config.slackOAuthToken,
+            sendResults: 'always', // "always" , "on-failure", "off"
+            maxNumberOfFailuresToShow: 10,
+            showInThread: true,
+            slackLogLevel: project.config.slackLogLevel,
+            meta: [
+              {
+                key: 'Run',
+                value: process.env.CI_RUN_URL || 'Local run',
+              },
+            ],
+          },
+        ],
+      ])
+    : []),
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
