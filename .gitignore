@@ -10,3 +10,7 @@ node_modules
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Local-only Claude Code context (never commit client paths)
+CLAUDE.local.md
+.claude/settings.local.json
