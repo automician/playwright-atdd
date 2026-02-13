@@ -6,7 +6,7 @@
   "main": "lib/index.js",
   "scripts": {},
   "keywords": [],
-  "author": "Iakiv Kramarenko",
+  "author": "Yakiv Kramarenko",
   "license": "MIT",
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.4",
