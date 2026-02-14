@@ -3,7 +3,10 @@
 ## What is this project?
 
 An open-source showcase of how an e2e test framework with Playwright may look,
-doubling as a reusable "snippets" collection for Playwright-based test automation projects. Maintained by a QA & QA Automation consultant (Yakiv Kramarenko)
+doubling as a reusable "snippets" collection for Playwright-based test automation projects. Designed to work both as a standalone project and as a sub-package
+in a monorepo — the recommended way to set up a test automation framework
+in a modern agentic software development workflow.
+Maintained by a QA & Automation consultant (Yakiv Kramarenko @yashaka)
 for reuse across client projects.
 
 ## Key architectural decisions
@@ -76,6 +79,9 @@ and client-project conventions may take precedence.
 
 ```text
 __tests__/          – Playwright test specs
+docs/
+  monorepo-setup.md – Guide for integrating into a monorepo
+  tooling/          – Rationale behind tooling choices (pnpm, Prettier, etc.)
 lib/
   model/            – Page-objects, controls, app-manager fixture
   support/
@@ -91,16 +97,19 @@ playwright.config.js
 
 ```sh
 # Run all tests
-npx playwright test
+pnpm exec playwright test
+
+# Run a specific test
+pnpm exec playwright test __tests__/duckduckgo.test.js:3
 
 # Run a specific test file
-npx playwright test __tests__/google.test.js
+pnpm exec playwright test __tests__/duckduckgo.test.js
 
-# Run unit-style tests colocated with helpers
-npx playwright test lib/
+# Run unit tests colocated with helpers (uses node:test, not Playwright)
+node --test lib/
 
 # Show HTML report
-npx playwright show-report
+pnpm exec playwright show-report
 ```
 
 ## Code style

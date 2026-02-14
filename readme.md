@@ -1,6 +1,10 @@
 # Demo of applying App Manager pattern and Steps proxy to playwright-based PageObjects
 
-Patterns & Techniques covered:
+## TODOs
+
+- [ ] ensure markdown formatting is counted
+
+## Patterns & Techniques covered
 
 - PageObject implementation...
   - more or less standard in context of technical implementation
@@ -25,14 +29,47 @@ Patterns & Techniques covered:
     - might be useful if key settings per environment are stored directly in CI yaml files like `gitlab-ci.yml`, though if possible I would prefer to use dotenv files only, that are also reused on CI if needed.
 - basic reporting to slack via [playwright-slack-report](https://www.npmjs.com/package/playwright-slack-report)
 
+Designed to work both as a standalone project and as a sub-package in a monorepo — the recommended way to set up a test automation framework in a modern agentic software development workflow. See [`docs/monorepo-setup.md`](docs/monorepo-setup.md) for a step-by-step integration guide.
+
 The proxy application to report each step-method of a PageObject will be documented later in more details, stay tuned;).
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (LTS recommended)
+- [pnpm](https://pnpm.io/installation) (`npm install -g pnpm` or via [Corepack](https://nodejs.org/api/corepack.html): `corepack enable`\*\*\*\*)
+
+### Setup
+
+```sh
+pnpm install
+pnpm install:playwright
+```
+
+### Running tests
+
+```sh
+# Run all Playwright tests
+pnpm test
+
+# Run a specific test file
+pnpm test __tests__/duckduckgo.test.js
+
+# Run unit tests colocated with helpers (uses node:test, not Playwright)
+pnpm test:unit
+
+# Show HTML report
+pnpm exec playwright show-report
+```
+
+See [`docs/tooling/`](docs/tooling/) for rationale behind tooling choices (pnpm, Prettier, etc.).
 
 ## Other TODOs
 
 - consider [zod](https://zod.dev/) for config schema validation
 - add example of api test to highlight how <return> sub-step is rendered (for the method-step that makes request and returns response)
 - refactor for project root based imports
-- add installation instructions to README
 - add project settings with dotenv overrides to allow customize steps behavior (like prefixes to ignore, etc.)
 - model one more page (like playwright docs, etc.)
 - document main examples of code + reports in README (with screenshots, like in [python-web-test project template README](https://github.com/yashaka/python-web-test?tab=readme-ov-file#details))
@@ -68,6 +105,8 @@ The proxy application to report each step-method of a PageObject will be documen
   – that does not look concise enough:) so let's think on it a bit more...
 
 - add API tests examples based on implemented helpers
+- add `docs/fullstack-app-setup.md` guide for using this project in a standalone full-stack app (inspired by [epic-stack](https://github.com/epicweb-dev/epic-stack)'s `/tests` convention)
+- restructure `lib/` for easier monorepo integration: move `lib/support/*` to separate `packages/` candidates, keeping `tooling/test-e2e` focused on test specs and page objects
 
 ## Slack Reporting
 
@@ -90,10 +129,39 @@ The project supports sending test results to Slack via [playwright-slack-report]
 
 ```bash
 # Run tests with Slack reporting
-slackOAuthToken=xoxb-... SLACK_CHANNELS=pw-tests,ci npx playwright test
+slackOAuthToken=xoxb-... SLACK_CHANNELS=pw-tests,ci pnpm exec playwright test
 ```
 
 The reporter is conditionally enabled only when `slackOAuthToken` is set.
+
+## FAQ
+
+### I used this project as a template for my e2e tests package in a monorepo, but running from the monorepo root doesn't pick up the Playwright config. What's wrong?
+
+Using this project as a monorepo sub-package is the intended setup for agentic software development workflows, where your test automation framework lives alongside the app code. The problem is likely with using `npx --prefix <your-e2e-package> playwright test` style of running tests from the monorepo root — Playwright may not find its config file this way. Try using idiomatic pnpm filtering instead:
+
+```sh
+pnpm -F '<your-e2e-package>' exec playwright test
+```
+
+Or add a convenience alias to your monorepo root `package.json`:
+
+```json
+"scripts": {
+  "test:e2e": "pnpm -F '<your-e2e-package>' exec playwright test"
+}
+```
+
+See [`docs/monorepo-setup.md`](docs/monorepo-setup.md) for the full integration guide and other common pitfalls.
+
+## Using npm instead of pnpm
+
+This project uses [pnpm](https://pnpm.io/) for stricter dependency resolution and faster installs. If you prefer npm:
+
+1. `rm pnpm-lock.yaml && npm install`
+2. In `package.json` scripts, replace `pnpm exec` with `npx` and `pnpm dlx` with `npx`
+
+Or ask your AI assistant: _"Migrate this project from pnpm to npm"_
 
 ## Parked TODOs
 
