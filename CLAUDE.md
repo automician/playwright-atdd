@@ -7,7 +7,7 @@ doubling as a reusable "snippets" collection for Playwright-based test automatio
 in a monorepo — the recommended way to set up a test automation framework
 in a modern agentic software development workflow.
 Maintained by a QA & Automation consultant (Yakiv Kramarenko @yashaka)
-for reuse across client projects.
+for reuse across projects of his clients.
 
 ## Key architectural decisions
 
@@ -20,11 +20,11 @@ for reuse across client projects.
 - **ESM** (`"type": "module"` in package.json).
 - **Minimal external dependencies.** Prefer standard/built-in solutions.
   When a widely-adopted standard lib exists (e.g. Zod for parsing) – use it
-  instead of hand-rolling. <!-- TODO: adopt Zod for config parsing -->
+  instead of hand-rolling. <!-- todo: adopt Zod for config parsing -->
 - **Self-contained helper modules.** Some small helpers intentionally avoid
   imports so they can be copied independently.
   Duplication between such modules is accepted for now.
-  <!-- TODO: reconsider the "zero-dep snippet module" approach;
+  <!-- todo: reconsider the "zero-dep snippet module" approach;
        maybe there's a better way to organise reusable snippets -->
 
 ## Guiding principles
@@ -81,6 +81,7 @@ and client-project conventions may take precedence.
 __tests__/          – Playwright test specs
 docs/
   monorepo-setup.md – Guide for integrating into a monorepo
+  practices/        – Patterns & techniques documentation
   tooling/          – Rationale behind tooling choices (pnpm, Prettier, etc.)
 lib/
   model/            – Page-objects, controls, app-manager fixture
@@ -119,3 +120,11 @@ pnpm exec playwright show-report
 - **Naming convention across layers:** keep the original casing from the
   source (e.g. a camelCase config key stays camelCase even as an env var:
   `process.env.mySetting`, not `process.env.MY_SETTING`).
+
+## TODO conventions
+
+- **`TODO`** (uppercase) in code or markdown — must be resolved before
+  the current feature is considered done (i.e. before pushing to `main`
+  or merging a feature branch).
+- **`todo`** (lowercase) — a backlog item for future addition or
+  refactoring. Not blocking the current work.

@@ -49,7 +49,7 @@ export default defineConfig({
             meta: [
               {
                 key: 'Run',
-                value: process.env.CI_RUN_URL || 'Local run',
+                value: process.env.CI_RUN_URL ?? 'Local run',
               },
             ],
           },
