@@ -9,7 +9,8 @@
     "test:unit": "node --test lib/",
     "install:playwright": "pnpm exec playwright install",
     "format": "prettier --check . --cache --cache-location node_modules/.cache/.prettiercache",
-    "format:fix": "prettier --write . --cache --cache-location node_modules/.cache/.prettiercache"
+    "format:fix": "prettier --write . --cache --cache-location node_modules/.cache/.prettiercache",
+    "typecheck": "tsgo --noEmit --emitDeclarationOnly false"
   },
   "keywords": [],
   "author": "Yakiv Kramarenko",
@@ -17,10 +18,12 @@
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.4",
     "@playwright/test": "^1.57.0",
+    "@typescript/native-preview": "~7.0.0-dev.20260201.1",
     "@types/node": "^25.0.1",
     "debug": "^4.4.3",
     "js-yaml": "^4.1.1",
     "playwright-slack-report": "^1.1.100",
-    "prettier": "3.8.1"
+    "prettier": "3.8.1",
+    "typescript": "~5.9.2"
   }
 }

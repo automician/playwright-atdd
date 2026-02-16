@@ -9,6 +9,7 @@ node_modules
 /test-results/
 /playwright-report/
 /blob-report/
+.cache/
 /playwright/.cache/
 
 # Local-only Claude Code context (never commit client paths)

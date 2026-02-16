@@ -1,12 +1,25 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "maxNodeModuleJsDepth": 1,
     "checkJs": true,
     "noEmit": true,
     "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "nodenext",
-    "moduleResolution": "nodenext"
+    "moduleResolution": "nodenext",
+    "maxNodeModuleJsDepth": 1,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".cache/tsbuildinfo.json",
+    "types": ["node"]
   },
-  "include": ["./**/*.*"]
+  "include": ["**/*"],
+  "exclude": ["node_modules", "playwright-report", "test-results", ".cache"]
 }

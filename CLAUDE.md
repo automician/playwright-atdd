@@ -11,12 +11,15 @@ for reuse across projects of his clients.
 
 ## Key architectural decisions
 
-- **Pure JS codebase** – so snippets are easy to copy-paste regardless of
+- **TypeScript project setup with JS support** –
+  the project uses `tsconfig.json` with `allowJs`, `checkJs`, `strict`,
+  and `noEmit` for type-checking without compilation.
+  Type-checking is done via [`tsgo`](docs/tooling/tsgo.md)
+  (native TypeScript type-checker).
+  Core helper modules under `lib/support/` stay in **pure JS** with
+  **JSDoc annotations** – so snippets are easy to copy-paste regardless of
   whether the target project uses JS or TS.
-  Typing safety is achieved via **JSDoc annotations** + `tsconfig.json`
-  (`allowJs`, `checkJs`, `noEmit`) for IDE inference.
-  Tests and page-objects may eventually migrate to TypeScript,
-  but core helpers will stay in pure JS.
+  Tests and page-objects may eventually migrate to TypeScript.
 - **ESM** (`"type": "module"` in package.json).
 - **Minimal external dependencies.** Prefer standard/built-in solutions.
   When a widely-adopted standard lib exists (e.g. Zod for parsing) – use it
@@ -61,6 +64,10 @@ See `.claude/rules/principles.md` for extended rationale and sources.
 
 - Do not add TypeScript to core helper modules under `lib/support/`.
 - Do not add external dependencies without explicit approval.
+- **When writing documentation with external links,** verify every URL
+  using `WebSearch` or `WebFetch` before including it. Never guess or
+  hallucinate a URL — if you cannot verify it, leave a `TODO` placeholder
+  instead.
 
 ## Module conventions
 
@@ -108,6 +115,9 @@ pnpm exec playwright test __tests__/duckduckgo.test.js
 
 # Run unit tests colocated with helpers (uses node:test, not Playwright)
 node --test lib/
+
+# Type-check (expects some errors in pure-JS files — that's OK)
+pnpm run typecheck
 
 # Show HTML report
 pnpm exec playwright show-report
