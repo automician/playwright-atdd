@@ -89,6 +89,18 @@ Consider inheritance for is-a only when the practical win is large.
 "Special cases aren't special enough to break the rules.
 Although practicality beats purity."
 
+### Practicality beats purity
+
+When a pragmatic solution significantly reduces boilerplate or
+improves developer experience, prefer it over dogmatic adherence
+to other principles — but keep the pragmatic part minimal and
+well-guarded.
+Example: `PageContext` is a thin base class that absorbs constructor
+boilerplate from every page object. It trades a bit of "flat is better
+than nested" for a large reduction in repetitive code.
+The key constraint: keep such pragmatic bases minimal in scope
+so they don't grow into "god classes" that break composition.
+
 ### Unit testing – classical (Detroit) school
 
 A "unit" is a functionally useful chunk of code, not necessarily

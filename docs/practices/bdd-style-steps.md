@@ -12,10 +12,10 @@ with a prefix and are rendered as boxed steps in the HTML report.
 
 ```js
 export const GIVEN = Step('GIVEN ')
-export const WHEN  = Step('WHEN ')
-export const THEN  = Step('THEN ')
-export const AND   = Step('AND ')
-export const STEP  = Step('')
+export const WHEN = Step('WHEN ')
+export const THEN = Step('THEN ')
+export const AND = Step('AND ')
+export const STEP = Step('')
 ```
 
 Each export is an overloaded function that accepts different argument
@@ -24,7 +24,13 @@ combinations (see usage styles below).
 Imported via `__tests__/__base-test__.js`:
 
 ```js
-export { GIVEN, WHEN, THEN, AND, STEP } from '../lib/support/playwright/reporting/gherkin.js'
+export {
+  GIVEN,
+  WHEN,
+  THEN,
+  AND,
+  STEP,
+} from '../lib/support/playwright/reporting/gherkin.js'
 ```
 
 ## Usage styles
@@ -129,9 +135,9 @@ All four styles can coexist in the same project. Pick based on context:
 Avoid often use of nested blocks with summaries for a single steps, like in:
 
 ```js
-  await WHEN('search for query', async () => {
-    await app.duckduckgo.search('playwright')
-  })
+await WHEN('search for query', async () => {
+  await app.duckduckgo.search('playwright')
+})
 ```
 
 Above the `app.duckduckgo.search('playwright')` is already readable itself, and if `duckduckgo.search` is already a step (built with [Steps proxy](./steps-proxy.md)), it will be rendered as readable step in the report. A valuable reason for doing so would be to stay consistent with the already used style in the test, for example, if you have a long test with many steps, and all of them can be grouped in 4 groups, where 3 groups have more than 2 steps and only one group has a single step, then it would be a good idea to use nested blocks with summaries for the single step group too.

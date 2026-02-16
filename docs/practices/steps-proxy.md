@@ -96,12 +96,11 @@ called outside of tests (e.g. during module loading).
 ## Configuration via project.config.js
 
 ```js
-
 const defaults = {
-  cancelWithSteps: false,     // set true to disable all step wrapping
-  enableMatcherSteps: true,   // wrap expect() matchers as steps
-  humanizeContext: true,       // 'DuckDuckGo' → 'duck duck go'
-  humanizeStepNames: true,    // 'shouldHaveResult' → 'should have result'
+  cancelWithSteps: false, // set true to disable all step wrapping
+  enableMatcherSteps: true, // wrap expect() matchers as steps
+  humanizeContext: true, // 'DuckDuckGo' → 'duck duck go'
+  humanizeStepNames: true, // 'shouldHaveResult' → 'should have result'
 }
 
 export const config = withEnvOverrides(defaults)
@@ -117,7 +116,7 @@ code snippets from the report, keeping only the step tree:
 
 ```js
 // playwright.config.js
-['html', { open: 'always', noSnippets: true }]
+;['html', { open: 'always', noSnippets: true }]
 ```
 
 ## See also

@@ -5,7 +5,7 @@
 A single `App` class serves as the entry point to all page objects.
 Tests receive it via a Playwright fixture and navigate from there:
 
-```js
+```ts
 test('finds playwright', async ({ app }) => {
   await app.duckduckgo.open()
   await app.duckduckgo.search('playwright')
@@ -18,25 +18,33 @@ discoverable through IDE autocompletion on `app.`.
 
 ## Implementation
 
-> `lib/model/app-manager.fixture.js`
+> `lib/model/app-manager.fixture.ts`
 
-```js
+The core idea — without `PageContext` — looks like this:
+
+```ts
 class App {
-  constructor(page) {
-    this.page = page
+  google: Google
+  duckduckgo: DuckDuckGo
+  searchEngine: AnySearchEngine
+
+  constructor(public page: Page) {
     this.google = new Google(page)
     this.duckduckgo = new DuckDuckGo(page)
     this.searchEngine = new AnySearchEngine(page)
 
-    return withSteps(this)
+    return withAsyncAsSteps(this)
   }
 
-  async shouldHavePageTitle(titleOrRegExp, options = {}) {
-    await expect(this.page).toHaveTitle(titleOrRegExp, options)
+  async shouldHavePageTitle(
+    valueOrPattern: string | RegExp,
+    options: { timeout?: number } = {},
+  ) {
+    await expect(this.page).toHaveTitle(valueOrPattern, options)
   }
 }
 
-export const AppManagerFixture = {
+export const AppManagerFixture: Fixtures<{ app: App }, ...> = {
   app: async ({ page }, use) => {
     await use(new App(page))
   },
@@ -46,17 +54,41 @@ export const AppManagerFixture = {
 The `App` class:
 
 - Creates all page objects in its constructor
-- Is itself wrapped with `withSteps(this)` so cross-page methods
+- Is itself wrapped with `withAsyncAsSteps(this)` so cross-page methods
   (like `shouldHavePageTitle`) appear in the step report
 - Exposes the raw `page` for cases where direct Playwright access is needed
+
+### With PageContext
+
+This project uses `PageContext`
+(see [PageObject pattern](./page-object-pattern.md#pagecontext-base-class)),
+which removes the constructor boilerplate:
+
+```ts
+class App extends PageContext {
+  google = new Google(this.page)
+  duckduckgo = new DuckDuckGo(this.page)
+  searchEngine = new AnySearchEngine(this.page)
+
+  async shouldHavePageTitle(
+    valueOrPattern: string | RegExp,
+    options: { timeout?: number } = {},
+  ) {
+    await expect(this.page).toHaveTitle(valueOrPattern, options)
+  }
+}
+```
+
+No constructor, no field type declarations, no manual step wrapping —
+all inherited from `PageContext`.
 
 ## Test wiring
 
 > `__tests__/__base-test__.js`
 
-```js
+```ts
 import * as base from '@playwright/test'
-import { AppManagerFixture } from '../lib/model/app-manager.fixture.js'
+import { AppManagerFixture } from '../lib/model/app-manager.fixture.ts'
 
 export const test = base.test.extend(AppManagerFixture)
 ```
@@ -66,12 +98,13 @@ This is the single place where the fixture is registered.
 
 ## External reference
 
-The Application Manager pattern is explained in detail in the
+The Application Manager pattern (including JavaScript versions)
+is explained in detail in the
 [Selenides for PageObjects Tutorial](https://autotest.how/selenides-for-page-objects-tutorial-md).
 
 ## See also
 
-- [PageObject pattern](./page-object-pattern.md) --
+- [PageObject pattern](./page-object-pattern.md) —
   how individual page objects are structured
-- [Steps proxy](./steps-proxy.md) --
-  how `withSteps(this)` works
+- [Steps proxy](./steps-proxy.md) —
+  how `withAsyncAsSteps(this)` works

@@ -19,7 +19,7 @@ for reuse across projects of his clients.
   Core helper modules under `lib/support/` stay in **pure JS** with
   **JSDoc annotations** – so snippets are easy to copy-paste regardless of
   whether the target project uses JS or TS.
-  Tests and page-objects may eventually migrate to TypeScript.
+  Page-objects and controls under `lib/model/` are written in **TypeScript**.
 - **ESM** (`"type": "module"` in package.json).
 - **Minimal external dependencies.** Prefer standard/built-in solutions.
   When a widely-adopted standard lib exists (e.g. Zod for parsing) – use it
@@ -32,7 +32,7 @@ for reuse across projects of his clients.
 
 ## Guiding principles
 
-See `.claude/rules/principles.md` for extended rationale and sources.
+See [guiding-principles](docs/guiding-principles.md) for extended rationale and sources.
 
 - **KISS & "Simple Made Easy".**
 - **Explicit is better than implicit.**
@@ -55,10 +55,32 @@ See `.claude/rules/principles.md` for extended rationale and sources.
 - **Prefer composition over inheritance** –
   always use composition for has-a relationships;
   consider inheritance for is-a only when the practical win is large.
+- **Practicality beats purity** –
+  when a pragmatic solution (e.g. a thin base class) significantly
+  reduces boilerplate, prefer it over dogmatic adherence to other
+  principles — but keep the pragmatic part minimal and well-guarded.
 - **Unit tests: classical (Detroit) school** –
   a "unit" is a functionally useful chunk of code (not necessarily
   a single function or method); replace with test doubles only
   unmanaged (not fully controlled by the app) out-of-process dependencies.
+
+## Patterns & conventions
+
+Read the relevant doc before adding or modifying page objects, controls,
+or test infrastructure. These are short — each takes under a minute.
+
+- **[PageObject pattern](docs/practices/page-object-pattern.md)** –
+  page objects extend `PageContext`; locators as field initializers;
+  page URL inside `open()`; assertion-steps included;
+  controls may or may not extend `PageContext`
+- **[Application Manager](docs/practices/application-manager-pattern.md)** –
+  single `App` entry point via Playwright fixture
+- **[Steps proxy](docs/practices/steps-proxy.md)** –
+  automatic test step reporting via `withAsyncAsSteps` / `withSteps`
+- **[BDD-style steps](docs/practices/bdd-style-steps.md)** –
+  optional GIVEN/WHEN/THEN wrappers for test readability
+- **[Project configuration](docs/practices/project-configuration.md)** –
+  layered config with dotenv and env var overrides
 
 ## Do NOT
 
@@ -87,9 +109,10 @@ and client-project conventions may take precedence.
 ```text
 __tests__/          – Playwright test specs
 docs/
-  monorepo-setup.md – Guide for integrating into a monorepo
-  practices/        – Patterns & techniques documentation
-  tooling/          – Rationale behind tooling choices (pnpm, Prettier, etc.)
+  guiding-principles.md – Extended rationale behind guiding principles
+  monorepo-setup.md     – Guide for integrating into a monorepo
+  practices/            – Patterns & techniques documentation
+  tooling/              – Rationale behind tooling choices (pnpm, Prettier, etc.)
 lib/
   model/            – Page-objects, controls, app-manager fixture
   support/

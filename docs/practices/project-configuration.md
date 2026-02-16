@@ -107,7 +107,6 @@ const defaultConfig = {
 }
 
 export const config = withGitlabCiOverrides(defaultConfig)
-
 ```
 
 ## Ubiquitous naming convention

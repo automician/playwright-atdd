@@ -136,3 +136,4 @@ See [`docs/monorepo-setup.md`](docs/monorepo-setup.md) for the full integration 
 - add more custom matchers (port latest selene matchers)
 - consider implementing literate programming approach for the project, collocating docs even closer to the code – exactly in the code files. Then, the majority of `docs/*` won't be needed at all.
   - though some docs might be transformed directly to documented skills
+- consider implementing Fluent Page Object pattern (will need a way to somehow deal with promises)
