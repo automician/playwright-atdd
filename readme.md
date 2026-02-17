@@ -48,7 +48,7 @@ See [`docs/tooling/slack-reporting.md`](docs/tooling/slack-reporting.md) for set
 pnpm test
 
 # Run a specific test file
-pnpm test __tests__/duckduckgo.test.js
+pnpm test __tests__/duckduckgo.test.ts
 
 # Run unit tests colocated with helpers (uses node:test, not Playwright)
 pnpm test:unit
@@ -87,6 +87,14 @@ Or add a convenience alias to your monorepo root `package.json`:
 ```
 
 See [`docs/monorepo-setup.md`](docs/monorepo-setup.md) for the full integration guide and other common pitfalls.
+
+### Why are helper modules in JavaScript instead of TypeScript?
+
+Core helper modules under `lib/support/` are intentionally written in **plain JavaScript with JSDoc type annotations**. This makes them easy to **copy-paste into any project** — whether it uses JavaScript or TypeScript — without requiring a build step or `.ts`-to-`.js` conversion. The project still gets full type safety: `tsconfig.json` is configured with `allowJs`, `checkJs`, and `strict`, so the TypeScript compiler (via [`tsgo`](docs/tooling/tsgo.md)) type-checks these JS files through their JSDoc annotations.
+
+Page objects, controls, and tests (`lib/model/`, `__tests__/`) **are** written in TypeScript, since they represent project-specific code that benefits from native TS syntax and is less likely to be copied verbatim into other projects.
+
+If you'd prefer to have the helpers in TypeScript as well, ask your AI assistant: _"Migrate `lib/support/` modules from JavaScript to TypeScript"_ — it will convert JSDoc annotations to native type syntax and rename the files accordingly.
 
 ## Project todos
 

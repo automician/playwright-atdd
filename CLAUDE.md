@@ -28,7 +28,7 @@ for reuse across projects of his clients.
   imports so they can be copied independently.
   Duplication between such modules is accepted for now.
   <!-- todo: reconsider the "zero-dep snippet module" approach;
-       maybe there's a better way to organise reusable snippets -->
+       maybe there's a better way to organize reusable snippets -->
 
 ## Guiding principles
 
@@ -131,10 +131,10 @@ playwright.config.js
 pnpm exec playwright test
 
 # Run a specific test
-pnpm exec playwright test __tests__/duckduckgo.test.js:3
+pnpm exec playwright test __tests__/duckduckgo.test.ts:3
 
 # Run a specific test file
-pnpm exec playwright test __tests__/duckduckgo.test.js
+pnpm exec playwright test __tests__/duckduckgo.test.ts
 
 # Run unit tests colocated with helpers (uses node:test, not Playwright)
 node --test lib/

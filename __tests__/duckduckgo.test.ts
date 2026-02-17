@@ -1,4 +1,4 @@
-import { test, expect, GIVEN, THEN, WHEN } from './__base-test__.js'
+import { test, expect, GIVEN, THEN, WHEN } from './__base-test__.ts'
 
 test('finds playwright | StepsObject, AAA pattern (implicit)', async ({ app }) => {
   await app.duckduckgo.open()
