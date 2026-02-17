@@ -49,6 +49,9 @@ See [guiding-principles](docs/guiding-principles.md) for extended rationale and 
 - **"Only one way" where possible** –
   though not always achievable here since different clients may need
   different flavours of the same helper.
+- **Consistency** –
+  prefer uniform patterns over local cleverness;
+  consistency is a form of KISS and Ubiquitous Language.
 - **Single Responsibility Principle.**
 - **Prefer functional programming style over imperative** where possible.
 - **Seek referential transparency, avoid side effects.**
@@ -59,6 +62,9 @@ See [guiding-principles](docs/guiding-principles.md) for extended rationale and 
   when a pragmatic solution (e.g. a thin base class) significantly
   reduces boilerplate, prefer it over dogmatic adherence to other
   principles — but keep the pragmatic part minimal and well-guarded.
+- **In tests, KISS trumps DRY** –
+  test code should be linear and obvious; push complexity
+  (branching, abstraction, DRY) into page objects and helpers.
 - **Unit tests: classical (Detroit) school** –
   a "unit" is a functionally useful chunk of code (not necessarily
   a single function or method); replace with test doubles only
@@ -122,6 +128,7 @@ lib/
     playwright/     – Playwright-specific helpers (steps, matchers, request)
 project.config.js   – Project-level config
 playwright.config.js
+eslint.config.js
 ```
 
 ## Commands
@@ -139,8 +146,14 @@ pnpm exec playwright test __tests__/duckduckgo.test.ts
 # Run unit tests colocated with helpers (uses node:test, not Playwright)
 node --test lib/
 
+# Lint (check)
+pnpm lint
+
+# Lint (fix)
+pnpm lint:fix
+
 # Type-check (expects some errors in pure-JS files — that's OK)
-pnpm run typecheck
+pnpm typecheck
 
 # Show HTML report
 pnpm exec playwright show-report
@@ -148,6 +161,9 @@ pnpm exec playwright show-report
 
 ## Code style
 
+- ESLint is configured (`eslint.config.js`, flat config).
+  See [docs/tooling/eslint.md](docs/tooling/eslint.md) for rule philosophy
+  and comparison with epic-stack.
 - Prettier is configured (`.prettierrc.cjs`, with `experimentalTernary`).
 - EditorConfig is present (`.editorconfig`).
 - **Naming convention across layers:** keep the original casing from the

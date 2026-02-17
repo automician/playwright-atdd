@@ -1,3 +1,4 @@
+/* eslint-disable playwright/no-skipped-test */
 import { test, expect, GIVEN, THEN, WHEN } from './__base-test__.ts'
 
 test.skip(

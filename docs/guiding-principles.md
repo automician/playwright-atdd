@@ -72,6 +72,14 @@ Strive for one canonical way to do something, but accept that
 this project serves multiple clients with different needs,
 so some helpers exist in alternative flavours.
 
+### Consistency
+
+Prefer uniform patterns over local cleverness.
+Consistency reduces cognitive load (one pattern to learn, not many)
+and is a form of KISS. It reinforces "only one way" and
+"ubiquitous language" — if two pieces of code do the same thing,
+they should look the same.
+
 ### Single Responsibility Principle
 
 Each module / function / class should have one reason to change.
@@ -100,6 +108,21 @@ boilerplate from every page object. It trades a bit of "flat is better
 than nested" for a large reduction in repetitive code.
 The key constraint: keep such pragmatic bases minimal in scope
 so they don't grow into "god classes" that break composition.
+
+### In tests, KISS trumps DRY
+
+Test code should be linear and obvious — no branching, minimal
+abstraction, no shared mutable state. Push complexity into
+page objects and helpers.
+
+When a test needs to behave differently per platform or configuration,
+the branching belongs in the model layer (page-object steps), not in
+the test itself. If business scenarios diverge significantly between
+platforms, write separate tests — more duplication, but more clarity
+on scale ("simple made easy").
+
+DRY is still valuable in helpers and page objects, where co-change
+probability is high and abstraction serves composition.
 
 ### Unit testing – classical (Detroit) school
 
