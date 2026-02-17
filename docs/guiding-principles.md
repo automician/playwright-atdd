@@ -61,6 +61,26 @@ Create abstractions first for self-documentation and composition.
 Apply DRY only where there is a high probability of co-change –
 premature DRY creates accidental coupling.
 
+A key reason to create abstractions is to maintain a
+**single level of abstraction**
+([SLAP](https://www.principles-wiki.net/principles:single_level_of_abstraction)):
+every method, function, or test body should operate at one consistent
+level of detail. Mixing high-level user intent with low-level
+technical plumbing makes code harder to read and harder to change.
+Extract the low-level details into a well-named method or module
+so that the calling code reads as a sequence of "whats", not "hows".
+
+This connects to
+[encapsulation](https://enterprisecraftsmanship.com/posts/encapsulation-revisited/) –
+hiding information unnecessary to clients' needs — and to the
+"easy to use correctly, hard to use incorrectly" design principle.
+In the context of this project, the
+[PageObject pattern](../practices/page-object-pattern.md) is a direct
+application: tests express user intent; page objects encapsulate
+Playwright API details. See also
+[abstraction levels](../practices/abstraction-levels.md) for how SLAP
+applies across the layers of an e2e test framework.
+
 ### YAGNI
 
 Do not build what is not needed yet.
@@ -96,6 +116,33 @@ Always use composition for has-a relationships.
 Consider inheritance for is-a only when the practical win is large.
 "Special cases aren't special enough to break the rules.
 Although practicality beats purity."
+
+### Easy to use correctly, hard to use incorrectly
+
+Design interfaces, APIs, frameworks, and test infrastructure so that
+the natural path leads to correct usage and the wrong path requires
+deliberate effort.
+
+This principle (from
+[Scott Meyers](https://www.aristeia.com/Papers/IEEE_Software_JulAug_2004_revised.htm))
+is broader than encapsulation alone — it applies everywhere we make
+design choices: page-object method signatures, configuration defaults,
+helper function APIs, framework conventions. A good API makes the
+caller fall into the pit of success.
+
+In the context of this project:
+
+- Test infrastructure (fixtures, page objects, controls) should guide
+  engineers toward correct Playwright usage without requiring deep
+  Playwright knowledge.
+- Lint rules enforce correct patterns; bypassing them requires a
+  deliberate `eslint-disable` with a comment — making the wrong path
+  visible and reviewable.
+- Configuration defaults should be safe; overrides should be explicit.
+
+This connects to encapsulation (hiding unnecessary details),
+SLAP (presenting the right level of abstraction), and SRP (each
+module does one thing well).
 
 ### Practicality beats purity
 

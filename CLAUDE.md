@@ -58,6 +58,9 @@ See [guiding-principles](docs/guiding-principles.md) for extended rationale and 
 - **Prefer composition over inheritance** –
   always use composition for has-a relationships;
   consider inheritance for is-a only when the practical win is large.
+- **Easy to use correctly, hard to use incorrectly** –
+  design interfaces, APIs, frameworks, and test infrastructure so that
+  the natural path leads to correct usage.
 - **Practicality beats purity** –
   when a pragmatic solution (e.g. a thin base class) significantly
   reduces boilerplate, prefer it over dogmatic adherence to other

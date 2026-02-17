@@ -271,6 +271,50 @@ This is simpler (no inheritance, no base class to understand) but requires:
 Both approaches are valid.
 This project uses `PageContext` for practicality.
 
+## Encapsulation and abstraction levels
+
+The PageObject pattern is fundamentally about
+[encapsulation](https://enterprisecraftsmanship.com/posts/encapsulation-revisited/) —
+hiding Playwright API details so that tests express user intent at a
+single, consistent level of abstraction
+([SLAP](https://www.principles-wiki.net/principles:single_level_of_abstraction)).
+
+A test should read as a sequence of things the user _does_ and _sees_:
+open a page, fill a form, verify a result. Technical concerns — locator
+strategies, waiting strategies, retry logic — belong inside page objects
+and controls, not in the test body.
+
+In practice this means:
+
+- **No `locator.waitFor()` in tests.** Playwright's auto-waiting handles
+  most cases. When explicit waiting is needed, encapsulate it in a
+  page-object method. If the user genuinely waits for something
+  (e.g. a loading indicator to disappear), model that as an assertion
+  (`expect`), not a `waitFor` — because we are testing user-observable
+  behavior, not technical readiness.
+- **No raw Playwright API calls in tests.** Use page-object methods
+  named after user actions (`search`, `open`, `followLink`), not
+  Playwright primitives (`click`, `fill`, `goto`).
+- **Assertions as behavioral expectations.** `shouldHaveResult` reads
+  as what the user expects to see, hiding the `expect(locator)` plumbing.
+
+This makes test code
+["easy to use correctly and hard to use incorrectly"](../guiding-principles.md#easy-to-use-correctly-hard-to-use-incorrectly) —
+the hallmark of good encapsulation.
+
+### Where this project bends SLAP
+
+This project deliberately merges _user goals_ and _user actions_ into
+the same PageObject class (the "StepsObject" flavour noted above).
+Strict SLAP would demand a separate StepsObject layer, but that adds
+indirection with little payoff in most cases — KISS and "flat is
+better than nested" take priority. Control-level PageObjects
+(`TextInput`, `Autocomplete`) remain separate for interaction with composite UI Components (like Autocomplete MUI React Component). "Simpler" control-level PageObjects, like `TextInput` can merge control interaction and some browser mechanics, where Playwright API remains too low (e.g. not building any waiting into actions like `pressSequentially`, see more in [Playwright Docs > Guides > Auto-waiting](https://playwright.dev/docs/actionability#introduction))
+
+See **[Abstraction levels in e2e testing](./abstraction-levels.md)**
+for the full four-level model, the SLAP/KISS tension, and guidance on
+how many layers to introduce depending on the team.
+
 ## Usage in tests
 
 Tests interact with page objects through the

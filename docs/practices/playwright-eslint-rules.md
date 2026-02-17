@@ -74,21 +74,28 @@ Flags `page.waitForSelector()`.
 canonical way to reference elements, and mixing in the old
 selector-based API is inconsistent.
 
-#### Deeper concern on waiting
+#### Deeper concern: explicit waiting breaks abstraction levels
 
-But the concern goes deeper. Even `locator.waitFor()` is rarely
-needed. Playwright's
+The concern goes beyond API consistency. Even `locator.waitFor()` is
+rarely needed. Playwright's
 [auto-waiting](https://playwright.dev/docs/actionability#introduction)
 means most actions already wait for the element to be actionable.
-Explicit `.waitFor()` is a low-level technical detail that does not
-belong in high-level user-behavior tests — we test what the _user_
-does, and the user does not "wait for a selector". When a user waits
-for something (e.g. a loading bar to disappear), that should be an
-explicit assertion (`expect`), not a `waitFor`.
 
-The correct approach is to encapsulate any necessary waiting inside
-page-object methods or custom locator wrappers, keeping test code
-focused on user intent.
+Explicit `.waitFor()` violates the
+[single level of abstraction](https://www.principles-wiki.net/principles:single_level_of_abstraction)
+principle (SLAP): test code should express _user intent_, not
+_technical plumbing_. A user does not "wait for a selector" — they
+perform actions and observe outcomes. Because we test user behavior,
+our tests should model that behavior: actions and assertions, not
+waits. When a user genuinely waits for something (e.g. a loading bar
+to disappear), that maps to an assertion (`expect`), not a `waitFor`.
+
+Any necessary low-level waiting should be
+[encapsulated](https://enterprisecraftsmanship.com/posts/encapsulation-revisited/)
+inside page-object methods or custom locator wrappers — hidden from
+the test, which stays at the user-intent level. This is what the
+[PageObject pattern](./page-object-pattern.md) is fundamentally about:
+making test code "easy to use correctly and hard to use incorrectly".
 
 This rule only flags `page.waitForSelector()`, not
 `locator.waitFor()` — so it does not go far enough on its own.
