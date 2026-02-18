@@ -98,3 +98,20 @@ test('finds playwright | StepsObject, AAA pattern (explicit, nested, with summar
     await app.shouldHavePageTitle(/Playwright/)
   })
 })
+
+test('finds playwright | StepsObject, AAA pattern (explicit, with summaries)', async ({
+  app,
+}) => {
+  await GIVEN('at duckduckgo')
+  await app.duckduckgo.open()
+  await app.duckduckgo.query.shouldBeEmpty()
+
+  await WHEN('search for query')
+  await app.duckduckgo.search('playwright')
+
+  await THEN('should have found relevant results')
+  await app.duckduckgo.shouldHaveResultsAtLeast(6)
+  await app.duckduckgo.shouldHaveResult({ number: 1, partialText: 'Playwright' })
+  await app.duckduckgo.followLinkOfResult(1)
+  await app.shouldHavePageTitle(/Playwright/)
+})

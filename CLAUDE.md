@@ -100,6 +100,13 @@ or test infrastructure. These are short — each takes under a minute.
   hallucinate a URL — if you cannot verify it, leave a `TODO` placeholder
   instead.
 
+## After creating or modifying any `.js` / `.ts` file
+
+- Run `pnpm typecheck` and fix any errors before considering the change done.
+- Run colocated unit tests (`node --test <file>`) if they exist.
+- Run `pnpm format:fix`
+- Run `pnpm lint` and fix any errors before considering the change done (feel free to run `pnpm lint:fix` to fix all errors automatically if needed).
+
 ## Module conventions
 
 - For single-function or single-class modules, use the same name as the function/class (camelCase or PascalCase), export as default. For modules with multiple exports, use `kebab-case`.
@@ -147,7 +154,7 @@ pnpm exec playwright test __tests__/duckduckgo.test.ts:3
 pnpm exec playwright test __tests__/duckduckgo.test.ts
 
 # Run unit tests colocated with helpers (uses node:test, not Playwright)
-node --test lib/
+pnpm test:unit
 
 # Lint (check)
 pnpm lint

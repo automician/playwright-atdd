@@ -65,7 +65,6 @@ export default defineConfig(
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
-      '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/consistent-type-imports': [
         'warn',
