@@ -24,11 +24,10 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['list', { printSteps: false }],
-    // ['html', { open: 'on-failure' }],
     [
       'html',
       {
-        open: 'always',
+        open: project.config.reporterOpen,
         port: 9324,
         // an important option for "withSteps" behavior,
         // to remove boilerplate code from the report

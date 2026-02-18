@@ -4,18 +4,15 @@ import dotenvx from '@dotenvx/dotenvx'
 
 const defaults = {
   apiBaseURL: 'https://api.example.com',
-  /* ⬇️ reporting ⬇️ */
+  /* ⬇️ html report ⬇️ */
+  /** @type {"on-failure" | "always" | "never" | undefined} */
+  reporterOpen: 'on-failure',
+  /* ⬇️ reporting steps ⬇️ */
   cancelWithSteps: false,
   enableMatcherSteps: true,
   humanizeContext: true,
   humanizeStepNames: true,
-  /* ⬇️ just for example purposes (don't store locators in config on a real project❗️) ⬇️ */
-  searchEngineUrl: '',
-  searchEngineQuerySelector: '',
-  searchEngineResultSelector: '',
-  searchEngineResultHeaderSelector: '',
-  searchEngineResultLinkSelector: '',
-  /* ⬇️ reporting ⬇️ */
+  /* ⬇️ slack reporting ⬇️ */
   slackOAuthToken: '',
   // todo: consider renaming `channelsString` to `slackChannelsString` and `channels()`
   //       to `slackChannels()` in `project.config.js`
@@ -25,6 +22,12 @@ const defaults = {
     return this.channelsString ? this.channelsString.split(',') : []
   },
   slackLogLevel: 'info', // "error", "warn", "info", "debug"
+  /* ⬇️ just for example purposes (don't store locators in config on a real project❗️) ⬇️ */
+  searchEngineUrl: '',
+  searchEngineQuerySelector: '',
+  searchEngineResultSelector: '',
+  searchEngineResultHeaderSelector: '',
+  searchEngineResultLinkSelector: '',
 }
 
 const shouldDebugDotenvx = process.env.DEBUG?.includes('dotenvx') ?? false
