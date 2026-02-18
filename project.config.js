@@ -33,7 +33,10 @@ const defaults = {
 const shouldDebugDotenvx = process.env.DEBUG?.includes('dotenvx') ?? false
 
 // load environment variables from .env file if exists
-dotenvx.config({ path: findFileWalkingToRoot('.env'), debug: shouldDebugDotenvx })
+dotenvx.config({
+  path: findFileWalkingToRoot('.env'),
+  debug: shouldDebugDotenvx,
+})
 
 export const config = withEnvOverrides(
   defaults,

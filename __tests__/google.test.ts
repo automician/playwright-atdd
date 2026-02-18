@@ -44,9 +44,7 @@ test('finds playwright | Straightforward, AAA pattern (implicit)', async ({ page
   await expect(page).toHaveTitle(/Playwright/)
 })
 
-test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', async ({
-  app,
-}) => {
+test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', async ({ app }) => {
   GIVEN()
   await app.google.open()
   await app.google.query.shouldBeEmpty()
@@ -61,9 +59,7 @@ test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', asyn
   await app.shouldHavePageTitle(/Playwright/)
 })
 
-test('finds playwright | StepsObject, AAA pattern (explicit, nested)', async ({
-  app,
-}) => {
+test('finds playwright | StepsObject, AAA pattern (explicit, nested)', async ({ app }) => {
   await GIVEN(async () => {
     await app.google.open()
     await app.google.query.shouldBeEmpty()

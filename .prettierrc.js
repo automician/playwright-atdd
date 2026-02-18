@@ -8,5 +8,10 @@ export default {
   singleQuote: true,
   trailingComma: 'all',
   printWidth: 88,
-  endOfLine: 'lf',
+  overrides: [
+    {
+      files: ['__tests__/**', '**/*.{test,spec}.{js,ts}'],
+      options: { printWidth: 100 },
+    },
+  ],
 }

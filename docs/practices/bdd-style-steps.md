@@ -50,7 +50,10 @@ test('finds playwright', async ({ app }) => {
 
   await app.duckduckgo.search('playwright')
   await app.duckduckgo.shouldHaveResultsAtLeast(6)
-  await app.duckduckgo.shouldHaveResult({ number: 1, partialText: 'Playwright' })
+  await app.duckduckgo.shouldHaveResult({
+    number: 1,
+    partialText: 'Playwright',
+  })
 
   await app.duckduckgo.followLinkOfResult(1)
   await app.shouldHavePageTitle(/Playwright/)
@@ -115,7 +118,10 @@ test('finds playwright', async ({ app }) => {
 
   await THEN('should have found relevant results', async () => {
     await app.duckduckgo.shouldHaveResultsAtLeast(6)
-    await app.duckduckgo.shouldHaveResult({ number: 1, partialText: 'Playwright' })
+    await app.duckduckgo.shouldHaveResult({
+      number: 1,
+      partialText: 'Playwright',
+    })
   })
 })
 ```

@@ -49,7 +49,10 @@ shouldDebugDotenvx = process.env.DEBUG?.includes('dotenvx') ?? false
 
 // so then...
 
-dotenvx.config({ path: findFileWalkingToRoot('.env'), debug: shouldDebugDotenvx })
+dotenvx.config({
+  path: findFileWalkingToRoot('.env'),
+  debug: shouldDebugDotenvx,
+})
 ```
 
 Thus, you can use it with dotenvx as follows (nested namespaces not supported, just use top-level `dotenvx`):

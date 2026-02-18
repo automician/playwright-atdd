@@ -42,9 +42,7 @@ test('finds playwright | Straightforward, AAA pattern (implicit)', async ({ page
   await expect(page).toHaveTitle(/Playwright/)
 })
 
-test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', async ({
-  app,
-}) => {
+test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', async ({ app }) => {
   GIVEN()
   await app.duckduckgo.open()
   await app.duckduckgo.query.shouldBeEmpty()
@@ -59,9 +57,7 @@ test('finds playwright | StepsObject, AAA pattern (explicit, titles-like)', asyn
   await app.shouldHavePageTitle(/Playwright/)
 })
 
-test('finds playwright | StepsObject, AAA pattern (explicit, nested)', async ({
-  app,
-}) => {
+test('finds playwright | StepsObject, AAA pattern (explicit, nested)', async ({ app }) => {
   await GIVEN(async () => {
     await app.duckduckgo.open()
     await app.duckduckgo.query.shouldBeEmpty()
@@ -99,9 +95,7 @@ test('finds playwright | StepsObject, AAA pattern (explicit, nested, with summar
   })
 })
 
-test('finds playwright | StepsObject, AAA pattern (explicit, with summaries)', async ({
-  app,
-}) => {
+test('finds playwright | StepsObject, AAA pattern (explicit, with summaries)', async ({ app }) => {
   await GIVEN('at duckduckgo')
   await app.duckduckgo.open()
   await app.duckduckgo.query.shouldBeEmpty()
