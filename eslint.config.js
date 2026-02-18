@@ -33,6 +33,7 @@ export default defineConfig(
       'test-results/**',
       'blob-report/**',
       '**/*.cjs',
+      '.prettierrc.js',
     ],
   },
 

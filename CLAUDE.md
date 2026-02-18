@@ -174,7 +174,7 @@ pnpm exec playwright show-report
 - ESLint is configured (`eslint.config.js`, flat config).
   See [docs/tooling/eslint.md](docs/tooling/eslint.md) for rule philosophy
   and comparison with epic-stack.
-- Prettier is configured (`.prettierrc.cjs`, with `experimentalTernary`).
+- Prettier is configured (`.prettierrc.js`, with `experimentalTernaries`).
 - EditorConfig is present (`.editorconfig`).
 - **Naming convention across layers:** keep the original casing from the
   source (e.g. a camelCase config key stays camelCase even as an env var:
