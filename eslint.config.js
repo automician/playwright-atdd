@@ -1,12 +1,30 @@
 // @ts-check
+import { defineConfig } from 'eslint/config'
 import eslint from '@eslint/js'
 import playwright from 'eslint-plugin-playwright'
 import tseslint from 'typescript-eslint'
 
-/* TODO: fix "The signature '(...configs: InfiniteDepthConfigWithExtends[]): ConfigArray' of 'tseslint.config' is deprecated.ts(6387)"
- */
-/** @type {import('typescript-eslint').Config} */
-export default tseslint.config(
+// ESLint flat config: rule-merging logic
+//
+// defineConfig() receives a sequence of config objects.
+// For each file ESLint collects every object whose "files" pattern matches
+// (objects without "files" match all files) and merges their "rules"
+// maps — later entries win on a per-rule basis.
+//
+// So in this config:
+// 1. Base presets (recommended, stylisticTypeChecked) — apply globally,
+//    set the baseline rules.
+// 2. Our overrides block (files: .js + .ts) — sits later,
+//    so its rules override the baseline per-rule where specified.
+// 3. Playwright blocks — scoped to test/model files; their rules merge
+//    on top of 1 + 2 for those files only.
+//
+// NOTE: We spread presets at the top level rather than using "extends"
+// inside a files-scoped block. defineConfig's "extends" intersects
+// the outer "files" with each preset's internal "files", which would
+// narrow tseslint's no-undef:off (intended for .ts only) so it
+// wouldn't cover .js — breaking JS linting.
+export default defineConfig(
   // ── Global ignores ──────────────────────────────────────────────
   {
     ignores: [
@@ -14,17 +32,25 @@ export default tseslint.config(
       'playwright-report/**',
       'test-results/**',
       'blob-report/**',
+      '**/*.cjs',
     ],
   },
 
   // ── Base: ESLint recommended + TS recommended + TS stylistic ───
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...tseslint.configs.stylisticTypeChecked,
+
+  // ── Type-checked config + rule overrides ─────────────────────
   {
     files: ['**/*.js', '**/*.ts'],
-    extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylisticTypeChecked,
-    ],
+    linterOptions: { reportUnusedDisableDirectives: true },
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
     rules: {
       // ── TypeScript overrides ──────────────────────────────────
       // Intentionally relaxed for a test automation project
@@ -59,17 +85,11 @@ export default tseslint.config(
       // ── Vanilla ESLint overrides ───────────────────────────────
       // Playwright fixtures use empty destructuring: async ({}, use) => ...
       'no-empty-pattern': 'off',
-    },
-  },
-
-  // ── Type-checked config: enable projectService ─────────────────
-  {
-    linterOptions: { reportUnusedDisableDirectives: true },
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
+      // With tseslint parser + projectService, no-undef is redundant
+      // (the TS compiler checks undefined variables for both .ts and .js).
+      // tseslint.configs.recommended disables it only for .ts files;
+      // we extend that to .js since projectService covers them too.
+      'no-undef': 'off',
     },
   },
 
