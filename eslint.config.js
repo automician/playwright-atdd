@@ -56,21 +56,43 @@ export default defineConfig(
       // ── TypeScript overrides ──────────────────────────────────
       // Intentionally relaxed for a test automation project
       // that heavily uses `any` in JSDoc-typed proxy/helper code.
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-unnecessary-condition': 'off',
+
+      // Proxy/helper code does dynamic dispatch by design —
+      // every proxy handler, Reflect call, and generic wrapper would flag.
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
+
+      // @ts-ignore / @ts-expect-error are sometimes needed
+      // in JSDoc-typed JS where the type system can't fully express
+      // what's happening.
+      '@typescript-eslint/ban-ts-comment': 'off',
+
+      // With strict:true + JSDoc-typed JS, the checker sometimes thinks
+      // a condition is unnecessary when it actually isn't
+      // (incomplete type inference in JS files).
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+
+      // In test/page-object code you frequently know an element exists
+      // from context; `!` is more readable than a guard clause.
+      '@typescript-eslint/no-non-null-assertion': 'off',
+
+      // TS compiler (tsgo) already checks unused vars;
+      // the ESLint version can conflict with JSDoc @param patterns.
       '@typescript-eslint/no-unused-vars': 'off',
+
+      // Pragmatic — proxy/helper code sometimes needs these.
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+
+      // ── Stylistic rules kept on ─────────────────────────────
       '@typescript-eslint/consistent-type-imports': [
         'warn',
         { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
       ],
+      // Catches real bugs: forgetting to `await` a Promise.
       '@typescript-eslint/no-misused-promises': [
         'error',
         { checksVoidReturn: { attributes: false } },
