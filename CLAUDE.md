@@ -68,10 +68,30 @@ See [guiding-principles](docs/guiding-principles.md) for extended rationale and 
 - **In tests, KISS trumps DRY** –
   test code should be linear and obvious; push complexity
   (branching, abstraction, DRY) into page objects and helpers.
+- **In tests, prefer literal values over imported constants in assertions** –
+  test assertions should be readable on their own without chasing imports;
+  the literal string or value _is_ the contract under test.
+  Use the constant in production code for DRY, but keep the raw value
+  in tests so the expected output is immediately visible.
 - **Unit tests: classical (Detroit) school** –
   a "unit" is a functionally useful chunk of code (not necessarily
   a single function or method); replace with test doubles only
   unmanaged (not fully controlled by the app) out-of-process dependencies.
+- **Assert the full result, not just parts of it** –
+  when the action under test produces a collection (array, map, set, etc.),
+  assert the entire collection with `deepStrictEqual` rather than
+  checking individual items or only the length.
+  Partial assertions (`entries[0]`, `entries.length`) can hide
+  unexpected extra items, missing items, or wrong ordering.
+  Use partial checks only when the full result is non-deterministic
+  or impractically large.
+- **Test structure: GIVEN / WHEN / THEN clarity** –
+  the three phases (arrange, act, assert) should be visually distinct.
+  A short test (≤ 3 statements) can be a single block;
+  longer tests should separate phases with empty lines.
+  When a phase itself has sub-blocks, add explicit comments
+  (`// GIVEN`, `// WHEN`, `// THEN`) as section headers
+  and use empty lines for sub-blocks within a phase.
 
 ## Patterns & conventions
 
@@ -99,6 +119,14 @@ or test infrastructure. These are short — each takes under a minute.
   using `WebSearch` or `WebFetch` before including it. Never guess or
   hallucinate a URL — if you cannot verify it, leave a `TODO` placeholder
   instead.
+
+## Self-improvement
+
+- **When the user corrects you,** evaluate whether the correction reveals
+  a recurring pattern or best practice that should be captured in your
+  context setup (CLAUDE.md, linked docs, etc.).
+  If you see an opportunity — propose the update and ask for approval
+  before making the change. Do not silently update or silently skip.
 
 ## After creating or modifying any `.js` / `.ts` file
 

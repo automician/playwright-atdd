@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test'
-import withAsyncAsSteps from '../support/playwright/reporting/configurable/withAsyncAsSteps.js'
+import withAsyncAsSteps from './withAsyncAsSteps.ts'
 
 /**
  * Thin base class for page objects and page-scoped controls.

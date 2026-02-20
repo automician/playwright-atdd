@@ -12,7 +12,8 @@
     "format:fix": "prettier --write . --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
-    "typecheck": "tsgo --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsgo --noEmit --emitDeclarationOnly false",
+    "check": "pnpm run typecheck && pnpm run format && pnpm run lint"
   },
   "keywords": [],
   "author": "Yakiv Kramarenko",

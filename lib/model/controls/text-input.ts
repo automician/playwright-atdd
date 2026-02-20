@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test'
 import { expect } from '../../support/playwright/test.js'
-import withAsyncAsSteps from '../../support/playwright/reporting/configurable/withAsyncAsSteps.js'
+import withAsyncAsSteps from '../withAsyncAsSteps.ts'
 
 export class TextInput {
   constructor(public locator: Locator) {

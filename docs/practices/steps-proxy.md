@@ -42,21 +42,63 @@ class TextInput {
 
 ### `withAsyncAsSteps(this)` -- preconfigured variant
 
-> `lib/support/playwright/reporting/configurable/withAsyncAsSteps.js`
+> `lib/model/withAsyncAsSteps.ts`
 
-A `WithSteps(...)` factory call with `ignoreNonAsync: true` and
-humanization settings read from `project.config.js`:
+A `WithSteps(...)` factory call with `ignoreNonAsync: true`,
+humanization settings from `project.config.js`, and model-aware
+`parsedOptions` that configure how params/return values are traversed
+for sub-step reporting:
 
-```js
+```ts
+/** Playwright doesn't export Page/Browser/etc. as runtime classes,
+ *  so we detect them by constructor name instead of instanceof. */
+const playwrightInfrastructure = new Set(['Page', 'Browser', 'BrowserContext'])
+
 export default WithSteps({
   ignoreNonAsync: true,
   humanizeContext: config.humanizeContext,
   humanizeStepNames: config.humanizeStepNames,
+  parsedOptions: {
+    skip: ({ key, value }) => {
+      if (key.startsWith('_')) return true
+      if (value === Marker.inaccessible || value === Marker.circular) return true
+      if (value instanceof PageContext) return true
+      if (
+        value !== null &&
+        typeof value === 'object' &&
+        playwrightInfrastructure.has(value.constructor?.name)
+      )
+        return true
+      if (typeof value === 'function') return true
+      if (
+        value !== null &&
+        typeof value === 'object' &&
+        value.constructor?.name === 'Locator'
+      )
+        return 'toString'
+      return false
+    },
+  },
 })
 ```
 
+Note: `PageContext` is a real class exported from this project, so
+`instanceof` works. Playwright types (`Page`, `Browser`,
+`BrowserContext`, `Locator`) are only exported as TypeScript interfaces —
+not as runtime classes — so we detect them by `constructor.name` instead.
+
+This skip predicate:
+
+- **Skips** private `_`-prefixed properties, inaccessible/circular markers,
+  Playwright infrastructure (`Page`, `Browser`, `BrowserContext`),
+  page objects (`PageContext` subclasses), and functions
+- **Summarizes** `Locator` instances via `toString()` instead of walking
+  their internals
+
 Recommended for page objects where only async methods should be steps
 (sync helper accessors like `result(number)` are skipped).
+Lives in `lib/model/` because the skip predicate depends on model-layer
+types (`PageContext`) and Playwright classes.
 
 ### `WithSteps(options)` -- factory for reusable presets
 
@@ -65,18 +107,19 @@ Use it to define project-level step presets (as `withAsyncAsSteps` does above).
 
 ## Options
 
-| Option              | Default                     | Description                                              |
-| ------------------- | --------------------------- | -------------------------------------------------------- |
-| `context`           | class name or `toString()`  | Label prefix for steps (string or `() => string`)        |
-| `ignore`            | `[/^_/, /^\$/, 'toString']` | Method names/patterns to skip                            |
-| `ignoreAlso`        | `[]`                        | Additional methods to skip (merged with `ignore`)        |
-| `ignoreNonAsync`    | `false`                     | Only wrap async methods                                  |
-| `box`               | `false`                     | Visually box steps in the HTML report                    |
-| `cancelable`        | `true`                      | Respect `config.cancelWithSteps` to disable all wrapping |
-| `paramsInSubSteps`  | `true`                      | Render method arguments as nested `<params>` sub-steps   |
-| `returnInSubSteps`  | `true`                      | Render return values as nested `<return>` sub-steps      |
-| `humanizeStepNames` | `false`                     | Convert `camelCase` method names to `camel case`         |
-| `humanizeContext`   | `false`                     | Apply humanization to the context label too              |
+| Option              | Default                     | Description                                                                                                             |
+| ------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `context`           | class name or `toString()`  | Label prefix for steps (string or `() => string`)                                                                       |
+| `ignore`            | `[/^_/, /^\$/, 'toString']` | Method names/patterns to skip                                                                                           |
+| `ignoreAlso`        | `[]`                        | Additional methods to skip (merged with `ignore`)                                                                       |
+| `ignoreNonAsync`    | `false`                     | Only wrap async methods                                                                                                 |
+| `box`               | `false`                     | Visually box steps in the HTML report                                                                                   |
+| `cancelable`        | `true`                      | Respect `config.cancelWithSteps` to disable all wrapping                                                                |
+| `parsedOptions`     | `{}`                        | Shared `ParsedOptions` for both params and return sub-step traversal (maxDepth, maxLeaves, skip)                        |
+| `paramsInSubSteps`  | `true`                      | `boolean \| ParsedOptions` — `false` to disable, `true` to use `parsedOptions`, or a `ParsedOptions` object to override |
+| `returnInSubSteps`  | `true`                      | `boolean \| ParsedOptions` — `false` to disable, `true` to use `parsedOptions`, or a `ParsedOptions` object to override |
+| `humanizeStepNames` | `false`                     | Convert `camelCase` method names to `camel case`                                                                        |
+| `humanizeContext`   | `false`                     | Apply humanization to the context label too                                                                             |
 
 ## How it works internally
 
