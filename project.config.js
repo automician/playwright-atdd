@@ -14,7 +14,7 @@ const defaults = {
   humanizeStepNames: true,
   /* ⬇️ slack reporting ⬇️ */
   slackOAuthToken: '',
-  // todo: consider renaming `channelsString` to `slackChannelsString` and `channels()`
+  // TODO: consider renaming `channelsString` to `slackChannelsString` and `channels()`
   //       to `slackChannels()` in `project.config.js`
   //       (and environment variables correspondingly)
   channelsString: 'pw-tests', // comma-separated list of channels to post to

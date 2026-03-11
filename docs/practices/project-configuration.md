@@ -52,7 +52,7 @@ export const config = withEnvOverrides({
 })
 ```
 
-Type coercion is automatic based on the default value's type: <!--todo: refactor parsing to use Zod package-->
+Type coercion is automatic based on the default value's type: <!--TODO: refactor parsing to use Zod package-->
 
 | Default type | Env var parsing                          |
 | ------------ | ---------------------------------------- |

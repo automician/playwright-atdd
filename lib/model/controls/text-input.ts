@@ -8,7 +8,7 @@ export class TextInput {
   }
 
   toString() {
-    // todo: what about this.locator._selector?
+    // TODO: what about this.locator._selector?
     return `TextInput(${this.locator})`
   }
 

@@ -135,6 +135,7 @@ If you'd prefer to have the helpers in TypeScript as well, ask your AI assistant
 
   – that does not look concise enough:) so let's think on it a bit more...
 
+- consider [oxc](https://oxc.rs/) over `tsgo`/eslint/prettier for ts compilation and everything
 - ensure Claude updates docs when code changes
 - update the convention for exports in modules in regards of when function and it's Factory version is exported (the function should be exported as default, the factory as an export const)
 - add API tests examples based on implemented helpers

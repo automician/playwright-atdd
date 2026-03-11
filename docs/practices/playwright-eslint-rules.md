@@ -100,7 +100,7 @@ making test code "easy to use correctly and hard to use incorrectly".
 This rule only flags `page.waitForSelector()`, not
 `locator.waitFor()` — so it does not go far enough on its own.
 
-<!-- todo: consider a custom rule or wrapper that discourages
+<!-- TODO: consider a custom rule or wrapper that discourages
      locator.waitFor() in test files, pushing all explicit waits
      into page-object / helper code -->
 

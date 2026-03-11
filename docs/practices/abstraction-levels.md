@@ -82,7 +82,7 @@ in the [PageObject pattern](./page-object-pattern.md) as the
 implementation closer to a StepsObject than a classic PageObject.
 
 ⚠️ The `DuckDuckGo` example is still very primitive and does not fully
-represent such idea of "mixing levels" in practice. <!-- todo: add more examples -->
+represent such idea of "mixing levels" in practice. <!-- TODO: add more examples -->
 
 **Why.** Introducing a separate StepsObject layer for every page adds
 indirection with little payoff in most projects. The merged approach
@@ -100,7 +100,7 @@ the occasional need for explicit `locator.waitFor()` on actions that
 lack built-in waiting. This project's conventions push these details into
 the control/framework layer, keeping tests and page-level PageObjects clean.
 
-<!-- todo: consider creating a custom Locator wrapper (similar to
+<!-- TODO: consider creating a custom Locator wrapper (similar to
      Selenide's SelenideElement / SeleneElement) that adds built-in
      waiting to all actions, fully encapsulating browser mechanics -->
 
@@ -119,7 +119,7 @@ tests, and on the complexity of the application under test.
 
 ### A note on agents
 
-<!-- todo: revisit as agentic workflows mature -->
+<!-- TODO: revisit as agentic workflows mature -->
 
 AI agents are a new and rapidly evolving audience. Some observations:
 

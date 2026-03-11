@@ -120,13 +120,34 @@ or test infrastructure. These are short — each takes under a minute.
   hallucinate a URL — if you cannot verify it, leave a `TODO` placeholder
   instead.
 
-## Self-improvement
+## Documentation
 
-- **When the user corrects you,** evaluate whether the correction reveals
-  a recurring pattern or best practice that should be captured in your
-  context setup (CLAUDE.md, linked docs, etc.).
-  If you see an opportunity — propose the update and ask for approval
-  before making the change. Do not silently update or silently skip.
+Prefer self-documenting code. Documentation should add value (onboarding
+context, high-level summaries, explain complexity, etc.), not duplicate
+what the code already says.
+Rephrasing at a higher abstraction level is fine when it adds clarity.
+
+**Placement:** colocate specific docs with the code they describe;
+general project docs go in `docs/`.
+
+**Code ↔ doc sync:** when you modify code that has related
+documentation — update both. Use cross-reference comments so the link
+is discoverable (e.g., `// Credentials summarized in docs/getting-started.md`
+in code, `*source: [profiles/dev.ts](../path)*` in docs).
+
+**Known code-doc pairs** are defined as path-scoped rules in
+`.claude/rules/docs/` — they trigger automatically when you edit
+matching files.
+
+**Applies to agent docs too:** when agents struggle, first improve the
+codebase to be self-explanatory; extend agent documentation only when
+code alone isn't enough. If you encounter something surprising — a
+pattern that wasn't obvious and caused wasted time — alert the developer
+and propose adding it to the appropriate documentation.
+Similarly, when the user corrects you, evaluate whether the correction
+reveals a pattern worth capturing in CLAUDE.md or linked docs —
+propose the update and ask for approval.
+Do not silently update or silently skip.
 
 ## After creating or modifying any `.js` / `.ts` file
 
@@ -210,8 +231,9 @@ pnpm exec playwright show-report
 
 ## TODO conventions
 
-- **`TODO`** (uppercase) in code or markdown — must be resolved before
-  the current feature is considered done (i.e. before pushing to `main`
-  or merging a feature branch).
-- **`todo`** (lowercase) — a backlog item for future addition or
-  refactoring. Not blocking the current work.
+- **`TODO!`** (uppercase, with trailing `!`) in code or markdown — must be
+  resolved before the current work (current task or specific step of a cross-session task) is considered done (ideally before commit).
+- **`TODO:`** (uppercase with trailing `:`) — a backlog item
+  for future addition or refactoring, may be specified to the corresponding
+  step of a cross-session task, e.g. `// TODO: implement in step 4`. Not
+  blocking the current work.

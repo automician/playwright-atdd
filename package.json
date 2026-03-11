@@ -14,8 +14,8 @@
     "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "typecheck": "tsgo --noEmit --emitDeclarationOnly false",
-    "check": "pnpm run typecheck && pnpm run format && pnpm run lint",
-    "check:fix": "pnpm run typecheck && pnpm run format:fix && pnpm run lint:fix"
+    "check": "pnpm typecheck && pnpm format && pnpm lint && pnpm test:unit",
+    "check:fix": "pnpm typecheck && pnpm format:fix && pnpm lint:fix && pnpm test:unit"
   },
   "keywords": [],
   "author": "Yakiv Kramarenko",
