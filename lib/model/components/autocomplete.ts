@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test'
 import { expect } from '../../support/playwright/test.js'
-import { PageContext } from '../PageContext.ts'
+import { PageContext } from '../common/PageContext.ts'
 
 export class Autocomplete extends PageContext {
   get input() {

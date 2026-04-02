@@ -139,6 +139,12 @@ export default defineConfig(
     files: ['__tests__/**'],
     rules: {
       // ── Test-only overrides ────────────────────────────────────
+      // TODO: consider changing should-based pattern to expect-based pattern,
+      // for more consistency with playwright native expectations.
+      // Also consider adding `expect$` to the pattern, and ensuring we never
+      // define objects with `expect` methods as fields or getters,
+      // i.e. always define them as methods/functions, so they can be considered
+      // as "expect" methods by eslint-plugin-playwright
       'playwright/expect-expect': ['warn', { assertFunctionPatterns: ['^should'] }],
       'playwright/max-nested-describe': ['warn', { max: 1 }],
       'playwright/no-conditional-in-test': 'error',

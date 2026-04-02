@@ -9,7 +9,7 @@ import { expect } from '@playwright/test'
 import { Google } from './pages/google.ts'
 import { DuckDuckGo } from './pages/duckduckgo.ts'
 import { AnySearchEngine } from './pages/any-search-engine.ts'
-import { PageContext } from './PageContext.ts'
+import { PageContext } from './common/PageContext.ts'
 
 class App extends PageContext {
   google = new Google(this.page)

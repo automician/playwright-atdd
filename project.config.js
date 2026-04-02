@@ -4,6 +4,21 @@ import dotenvx from '@dotenvx/dotenvx'
 
 const defaults = {
   apiBaseURL: 'https://api.example.com',
+  /* ⬇️ Model related⬇️ */
+  locale: 'en-US',
+  /* ⬇️ playwright ⬇️ */
+  timeout: 60 * 1000,
+  expectTimeout: 4 * 1000,
+  expectToPassTimeout: 2 * 1000,
+  expectToPassIntervals: [100, 250, 500, 750],
+  actionTimeout: 4 * 1000,
+  testDir: '__tests__/',
+  testMatch: /.*(test|spec).(js|ts|mjs)/,
+  headless: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  trace: 'on-first-retry', // "on-first-retry" | "off" | "on" | "retain-on-failure" | "on-all-retries" | "retain-on-first-failure"
+  workers: process.env.CI ? 1 : undefined,
+  reporterListPrintSteps: false,
   /* ⬇️ html report ⬇️ */
   /** @type {"on-failure" | "always" | "never" | undefined} */
   reporterOpen: 'on-failure',

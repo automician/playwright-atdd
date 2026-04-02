@@ -1,7 +1,7 @@
-import { TextInput } from '../controls/text-input.ts'
+import { TextInput } from '../components/text-input.ts'
 import { expect } from '../../support/playwright/test.js'
 import { config } from '../../../project.config.js'
-import { PageContext } from '../PageContext.ts'
+import { PageContext } from '../common/PageContext.ts'
 
 /**
  * This Page is just for example purposes of using "dotenv based project config settings".

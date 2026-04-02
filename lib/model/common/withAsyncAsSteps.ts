@@ -1,6 +1,6 @@
-import { WithSteps } from '../support/playwright/reporting/steps.proxy.js'
-import { Marker } from '../support/common/object-utils/its.js'
-import { config } from '../../project.config.js'
+import { WithSteps } from '../../support/playwright/reporting/steps.proxy.js'
+import { Marker } from '../../support/common/object-utils/its.js'
+import { config } from '../../../project.config.js'
 import { PageContext } from './PageContext.ts'
 
 /** Playwright doesn't export Page/Browser/etc. as runtime classes,

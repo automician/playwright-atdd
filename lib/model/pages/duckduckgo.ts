@@ -1,6 +1,6 @@
-import { TextInput } from '../controls/text-input.ts'
+import { TextInput } from '../components/text-input.ts'
 import { expect } from '../../support/playwright/test.js'
-import { PageContext } from '../PageContext.ts'
+import { PageContext } from '../common/PageContext.ts'
 
 export class DuckDuckGo extends PageContext {
   query = new TextInput(this.locator('[name="q"]'))

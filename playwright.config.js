@@ -12,18 +12,18 @@ import { project } from './project.config.js'
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: '__tests__',
+  testDir: project.config.testDir,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: project.config.retries,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: project.config.workers,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['list', { printSteps: false }],
+    ['list', { printSteps: project.config.reporterListPrintSteps }],
     [
       'html',
       {
@@ -61,8 +61,8 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
-    headless: !!process.env.CI,
-    actionTimeout: 4 * 1000,
+    headless: project.config.headless,
+    actionTimeout: project.config.actionTimeout,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     // trace: 'on-first-retry',
     trace: {
@@ -73,14 +73,14 @@ export default defineConfig({
     },
   },
   expect: {
-    timeout: 4 * 1000,
+    timeout: project.config.expectTimeout,
     toPass: {
-      timeout: 2 * 1000, // mostly used for API tests polling, that's why it's less than the timeout above
+      timeout: project.config.expectToPassTimeout, // mostly used for API tests polling, that's why it's less than the timeout above
       // defines the actual polling intervals in the exact amount specified in the array:
-      intervals: [100, 250, 500, 750],
+      intervals: project.config.expectToPassIntervals,
     },
   },
-  timeout: 15 * 1000,
+  timeout: project.config.timeout,
 
   /* Configure projects for major browsers */
   projects: [
